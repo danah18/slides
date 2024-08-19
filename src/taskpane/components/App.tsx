@@ -5,6 +5,7 @@ import TextInsertion from "./TextInsertion";
 import { makeStyles } from "@fluentui/react-components";
 import { Ribbon24Regular, LockOpen24Regular, DesignIdeas24Regular } from "@fluentui/react-icons";
 import { insertText } from "../taskpane";
+import { search } from "../taskpaneManager";
 
 interface AppProps {
   title: string;
@@ -16,31 +17,31 @@ const useStyles = makeStyles({
   },
 });
 
-const App: React.FC<AppProps> = (props: AppProps) => {
+const App: React.FC<AppProps> = () => {
 
   const styles = useStyles();
   // The list items are static and won't change at runtime,
   // so this should be an ordinary const, not a part of state.
   const listItems: HeroListItem[] = [
     {
-      icon: <Ribbon24Regular />,
-      primaryText: "Achieve more with Office integration",
+      // ../../../assets/templates/columncomparison/1.png
+      icon: <img src={"../../../assets/1.png"} alt="" />, //<Ribbon24Regular />,
+      primaryText: "",
     },
     {
-      icon: <LockOpen24Regular />,
-      primaryText: "Unlock features and functionality",
+      icon: <LockOpen24Regular />, //<img src={"../../../assets/logo-filled.png"} alt="" />, //<LockOpen24Regular />,
+      primaryText: "",
     },
     {
       icon: <DesignIdeas24Regular />,
-      primaryText: "Create and visualize like a pro",
+      primaryText: "",
     },
   ];
 
   return (
     <div className={styles.root}>
-      <Header logo="assets/logo-filled.png" title={props.title} message="Welcome" />
-      <HeroList message="Discover what this add-in can do for you today!" items={listItems} />
-      <TextInsertion insertText={insertText} />
+      <TextInsertion insertText={search} />
+      <HeroList message="" items={listItems} />
     </div>
   );
 };
