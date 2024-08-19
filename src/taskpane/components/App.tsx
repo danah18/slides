@@ -17,6 +17,10 @@ const useStyles = makeStyles({
   },
 });
 
+
+const width = 150;
+const height = 100;
+
 const App: React.FC<AppProps> = () => {
 
   const styles = useStyles();
@@ -24,12 +28,11 @@ const App: React.FC<AppProps> = () => {
   // so this should be an ordinary const, not a part of state.
   const listItems: HeroListItem[] = [
     {
-      // ../../../assets/templates/columncomparison/1.png
-      icon: <img src={"../../../assets/1.png"} alt="" />, //<Ribbon24Regular />,
+      icon: <img src={"../../../assets/1.png"} alt="" style={{ width: `${width}px`, height: `${height}px`}}/>,
       primaryText: "",
     },
     {
-      icon: <LockOpen24Regular />, //<img src={"../../../assets/logo-filled.png"} alt="" />, //<LockOpen24Regular />,
+      icon: <LockOpen24Regular />, //<img src={"../../../assets/logo-filled.png"} alt="" />,
       primaryText: "",
     },
     {
@@ -41,7 +44,6 @@ const App: React.FC<AppProps> = () => {
   return (
     <div className={styles.root}>
       <TextInsertion insertText={search} />
-      <HeroList message="" items={listItems} />
     </div>
   );
 };
