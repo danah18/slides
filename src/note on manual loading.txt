@@ -1,0 +1,57 @@
+The Office JavaScript API requires explicit loading of properties to optimize performance and reduce unnecessary data transfer. However, you can write utility functions to make this process easier and less repetitive. While there's no built-in way to automatically load all properties of all children, you can create a helper function to load multiple properties or deeply nested properties more conveniently.
+
+Here's a general approach to create such a helper function:
+
+Helper Function to Load Nested Properties
+This function will recursively load properties for objects and their children if they have a collection of items.
+
+javascript
+Copy code
+async function loadProperties(object, properties) {
+    object.load(properties);
+    await context.sync();
+  
+    // Load properties of child objects if they have an "items" collection
+    for (const property of properties.split(',')) {
+        const trimmedProperty = property.trim();
+        if (object[trimmedProperty] && object[trimmedProperty].items) {
+            for (const item of object[trimmedProperty].items) {
+                // Recursively load properties for each child item
+                await loadProperties(item, properties);
+            }
+        }
+    }
+}
+
+// Usage example
+async function run() {
+    await PowerPoint.run(async (context) => {
+        // Get the selected slide
+        const slide = context.presentation.getSelectedSlides().getItemAt(0);
+        // Get the shapes collection from the slide
+        const shapes = slide.shapes;
+      
+        // Load items and their properties
+        await loadProperties(shapes, "items,textFrame,textFrame.textRange,textFrame.textRange.text");
+      
+        // Example: Access the textFrame property of the shape at position 3 (index 2)
+        const shape = shapes.items[2];
+        const textFrame = shape.textFrame;
+        const text = textFrame.textRange.text;
+        console.log(text);
+    });
+}
+Explanation
+loadProperties Function:
+
+The function loadProperties takes an object and a comma-separated string of properties to load.
+It loads the specified properties and synchronizes the context.
+If the object has a collection of items (e.g., shapes.items), it recursively loads properties for each child item.
+Usage Example:
+
+The run function demonstrates how to use the loadProperties function.
+It loads properties of the shapes collection and their nested textFrame and textRange properties.
+This approach allows you to specify multiple properties to load at once and handles nested properties recursively. Although it still requires you to specify which properties to load, it simplifies the process and reduces redundancy in your code.
+
+Discovering Properties
+To discover available properties, you can refer to the Office JavaScript API documentation. The documentation provides detailed information on available properties and methods for various objects in the API.
