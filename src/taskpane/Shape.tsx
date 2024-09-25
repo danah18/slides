@@ -12,6 +12,7 @@ export interface Font {
 export interface TextRange {
     text: string;
     font: Font;
+    paragraphFormat: PowerPoint.ParagraphFormat;
 }
 
 export interface TextFrame {

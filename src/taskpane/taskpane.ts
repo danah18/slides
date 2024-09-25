@@ -47,18 +47,6 @@ export async function insertText() {
             shape.textFrame.textRange.load("paragraphFormat");
             await context.sync();
 
-            let pFormat = shape.textFrame.textRange.paragraphFormat;
-            let bulletFormat = pFormat.bulletFormat;
-
-
-            shape.textFrame.textRange.paragraphFormat.bulletFormat.load("visible");
-            await context.sync();
-
-            let visible = bulletFormat.visible;
-
-            let horizontalAlignment = pFormat.horizontalAlignment;
-            let verticalAlignment = shape.textFrame.verticalAlignment;   
-            
             // seems like we can use the Powerpoint classes themselves, since it's just an array we are storing them in
             const font: Font = {
               name: fontObj.name,
@@ -72,6 +60,7 @@ export async function insertText() {
             const textRange: TextRange = {
               text: shape.textFrame.textRange.text, 
               font: font,
+              paragraphFormat: shape.textFrame.textRange.paragraphFormat,
             };
       
             const textFrame: TextFrame = {
@@ -166,9 +155,7 @@ export async function insertText() {
           // };
     
           // missing and needs to be added in
-  
-  
-  //        shapeArray.push(shapeInterface); 
+          //        shapeArray.push(shapeInterface); 
   
           // -- these are the important lines of code for adding in new content 
           // shape.textFrame.textRange.text = "overwrote the text properly";
@@ -290,10 +277,17 @@ export async function insertText() {
           textBox.textFrame.textRange.font.size = shapeArray[i].textFrame.textRange.font.size;
           textBox.textFrame.textRange.font.color = shapeArray[i].textFrame.textRange.font.color;
           textBox.textFrame.textRange.font.bold = shapeArray[i].textFrame.textRange.font.bold;
-        //shape.textFrame.textRange.font.underline = shapeArray[i].textFrame.textRange.font.underline;
+          //shape.textFrame.textRange.font.underline = shapeArray[i].textFrame.textRange.font.underline;
           textBox.textFrame.textRange.font.italic = shapeArray[i].textFrame.textRange.font.italic;
+          textBox.textFrame.verticalAlignment = shapeArray[i].textFrame.verticalAlignment as PowerPoint.TextVerticalAlignment;
           
           //textBox.textFrame.autoSizeSetting = "AutoSizeTextToFitShape";
+
+          shapeArray[i].textFrame.textRange.paragraphFormat.bulletFormat.load("visible");
+          await context.sync();
+
+          textBox.textFrame.textRange.paragraphFormat.horizontalAlignment = shapeArray[i].textFrame.textRange.paragraphFormat.horizontalAlignment;
+          textBox.textFrame.textRange.paragraphFormat.bulletFormat.visible = shapeArray[i].textFrame.textRange.paragraphFormat.bulletFormat.visible;
         }
         else if (shapeArray[i].type == "Line")
         {
