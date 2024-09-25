@@ -1,0 +1,31 @@
+export const TemplateCategory = {
+    Title: "Title Slides",
+    Executive: "Executive Summaries",
+    Assessment: "Assessment & Option Comparisons",
+    Competitor: "Competitor Analysis",
+    Trends: "Trends & Main Takeaways",
+    Roadmap: "Roadmap & Timelines",
+    DetailedImplementation: "Detailed Implementation Plans",
+    Findings: "Findings & Recommendations",
+    Frameworks: "Frameworks",
+    Column: "Column & Bar Charts",
+    Line: "Line Charts",
+    Bubble: "Bubble & Scatter Charts",
+    Pie: "Pie Charts",
+};
+
+export const TemplateDictionary: { [key: string]: number[] } = {
+    [TemplateCategory.Title]: [25, 30],
+    [TemplateCategory.Executive]: [25, 30],
+    [TemplateCategory.Assessment]: [25, 30],
+    [TemplateCategory.Competitor]: [25, 30],
+    [TemplateCategory.Trends]: [25, 30],
+    [TemplateCategory.Roadmap]: [25, 30],
+    [TemplateCategory.DetailedImplementation]: [25, 30],
+    [TemplateCategory.Findings]: [25, 30],
+    [TemplateCategory.Frameworks]: [25, 30],
+    [TemplateCategory.Column]: [25, 30],
+    [TemplateCategory.Line]: [25, 30],
+    [TemplateCategory.Bubble]: [25, 30],
+    [TemplateCategory.Pie]: [25, 30],
+  };

@@ -6,6 +6,7 @@ import { makeStyles } from "@fluentui/react-components";
 import { Ribbon24Regular, LockOpen24Regular, DesignIdeas24Regular } from "@fluentui/react-icons";
 import { insertText } from "../taskpane";
 import { search } from "../taskpaneManager";
+import { TemplateDropdown } from "./TemplateDropdown";
 
 interface AppProps {
   title: string;
@@ -43,6 +44,7 @@ const App: React.FC<AppProps> = () => {
 
   return (
     <div className={styles.root}>
+      <TemplateDropdown/>
       <TextInsertion insertText={search} />
     </div>
   );
