@@ -9,6 +9,7 @@ import {
   } from "@fluentui/react-components";
   import * as React from "react";
   import { TemplateCategory, TemplateDictionary } from "./TemplateConstants";
+import { insertText } from "../taskpane";
   
 const useStyles = makeStyles({
   root: {
@@ -48,6 +49,7 @@ export const TemplateDropdown = (props: Partial<DropdownProps>) => {
   const handleOptionSelect = (_event: React.SyntheticEvent, data: OptionOnSelectData) => {
     console.log("Selected option:", data.optionValue); // The selected value
     console.log(TemplateDictionary[data.optionValue]);
+    insertText();
   };
 
   return (
@@ -59,7 +61,7 @@ export const TemplateDropdown = (props: Partial<DropdownProps>) => {
         {...props}
       >
         {options.map((option) => (
-          <Option key={option} disabled={option === "Ferret"}>
+          <Option key={option}>
             {option}
           </Option>
         ))}

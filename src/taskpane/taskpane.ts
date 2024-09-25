@@ -3,7 +3,7 @@ import { Font, TextRange, TextFrame, Shape, ShapeArray } from './Shape';
 
 // reading of the elements needs to happen in either capacity, it's just a matter of do we want to realtime edit the shapes (i think?) tbh i think element
 // reading for both helps
-export async function insertText(text: string) {
+export async function insertText() {
   try {
     await PowerPoint.run(async (context) => {
       const slide = context.presentation.getSelectedSlides().getItemAt(0);
@@ -44,6 +44,21 @@ export async function insertText(text: string) {
               fontObj.size = 11;
             }
 
+            shape.textFrame.textRange.load("paragraphFormat");
+            await context.sync();
+
+            let pFormat = shape.textFrame.textRange.paragraphFormat;
+            let bulletFormat = pFormat.bulletFormat;
+
+
+            shape.textFrame.textRange.paragraphFormat.bulletFormat.load("visible");
+            await context.sync();
+
+            let visible = bulletFormat.visible;
+
+            let horizontalAlignment = pFormat.horizontalAlignment;
+            let verticalAlignment = shape.textFrame.verticalAlignment;   
+            
             // seems like we can use the Powerpoint classes themselves, since it's just an array we are storing them in
             const font: Font = {
               name: fontObj.name,
@@ -102,6 +117,20 @@ export async function insertText(text: string) {
           else if (type == "Line")
           {
             console.log("Line found");
+
+            shapeInterface = {
+              height: shape.height,
+              width: shape.width,
+              left: shape.left,
+              top: shape.top,
+              id: shape.id,
+              name: shape.name,
+              textFrame: null,
+              type: type,
+              fill: shape.fill,
+              lineFormat: shape.lineFormat,
+            };
+            shapeArray.push(shapeInterface);
           }
           else if (type == "Table")
           {
@@ -151,15 +180,6 @@ export async function insertText(text: string) {
         console.log(e);
       }
      
-      // in theory at this point we would probably want to write this to a db to store the array
-
-      const textBox = slide.shapes.addTextBox(text);
-      textBox.fill.setSolidColor("white");
-      textBox.lineFormat.color = "black";
-      textBox.lineFormat.weight = 1;
-      textBox.lineFormat.dashStyle = PowerPoint.ShapeLineDashStyle.solid;
-      await context.sync();
-
       // Add a new slide to the presentation
       context.presentation.slides.add();
       await context.sync();
@@ -173,6 +193,28 @@ export async function insertText(text: string) {
       // Load the new slide and sync the context
       newSlide.load("shapes");
       await context.sync();
+
+      const newSlideDefaultShapes = newSlide.shapes;
+
+      // Load all the shapes in the collection without loading their properties.
+      newSlideDefaultShapes.load("items/$none");
+
+      // Load all the shapes in the collection with loading their properties.
+      // shapes.load("items/");
+      await context.sync();
+
+      try
+      {
+        // Remove default shapes
+        for (let i = 0; i < newSlideDefaultShapes.items.length; i++) {
+          let currentShape = newSlideDefaultShapes.items[i];
+          currentShape.delete();
+        }
+      }
+      catch
+      {
+
+      }
 
       for (let i = 0; i < shapeArray.length; i++) {
         // A more effective way to fill in this data is definitely needed
@@ -215,17 +257,34 @@ export async function insertText(text: string) {
 
           await context.sync();
 
+          let foregroundColor = shapeArray[i].fill.foregroundColor;
+
+          if (foregroundColor !== "")
+          {
+            textBox.fill.setSolidColor(shapeArray[i].fill.foregroundColor);
+          }
+
           if (shapeArray[i].textFrame.textRange.text.includes("Eco"))
           {
             let fill = shapeArray[i].fill.foregroundColor;
             let line = shapeArray[i].lineFormat.color;
           }
 
-          //textBox.fill.setSolidColor("white");
-          // textBox.lineFormat.color = "black";
-          // textBox.lineFormat.weight = 1;
-          // textBox.lineFormat.dashStyle = PowerPoint.ShapeLineDashStyle.solid;
+          if (shapeArray[i].lineFormat.color !== "")
+          {
+            textBox.lineFormat.color = shapeArray[i].lineFormat.color;
+          }
 
+          if (shapeArray[i].lineFormat.weight !== -1)
+          {
+            textBox.lineFormat.weight = shapeArray[i].lineFormat.weight;
+          }
+
+          // // There's a bug with dash style happening
+          // console.log(shapeArray[i].lineFormat.dashStyle);
+          //textBox.lineFormat.dashStyle = shapeArray[i].lineFormat.dashStyle;
+
+          let value = textBox.textFrame.textRange.paragraphFormat;
 
           textBox.textFrame.textRange.font.name = shapeArray[i].textFrame.textRange.font.name;
           textBox.textFrame.textRange.font.size = shapeArray[i].textFrame.textRange.font.size;
@@ -233,11 +292,34 @@ export async function insertText(text: string) {
           textBox.textFrame.textRange.font.bold = shapeArray[i].textFrame.textRange.font.bold;
         //shape.textFrame.textRange.font.underline = shapeArray[i].textFrame.textRange.font.underline;
           textBox.textFrame.textRange.font.italic = shapeArray[i].textFrame.textRange.font.italic;
-          textBox.textFrame.autoSizeSetting = "AutoSizeTextToFitShape";
+          
+          //textBox.textFrame.autoSizeSetting = "AutoSizeTextToFitShape";
         }
         else if (shapeArray[i].type == "Line")
         {
           console.log("Line found");
+
+          let currentShape = shapeArray[i];
+          const line = newSlide.shapes.addLine();
+
+          await context.sync();
+
+          // PowerPoint.GeometricShapeType
+          line.width = shapeArray[i].width;
+          line.height = shapeArray[i].height;
+          line.left = shapeArray[i].left;
+          line.top = shapeArray[i].top;
+          line.name = shapeArray[i].name;
+
+          shapeArray[i].lineFormat.load("color");
+          shapeArray[i].lineFormat.load("weight");
+          shapeArray[i].lineFormat.load("dashStyle");
+
+          await context.sync();
+
+          line.lineFormat.color = shapeArray[i].lineFormat.color;
+          line.lineFormat.weight = shapeArray[i].lineFormat.weight;
+          line.lineFormat.dashStyle = shapeArray[i].lineFormat.dashStyle;
         }
         else if (shapeArray[i].type == "Table")
         {

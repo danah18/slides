@@ -34,12 +34,10 @@ export interface Shape {
     lineFormat: PowerPoint.ShapeLineFormat,
 }
 
-
-
-          // textBox.fill.setSolidColor("white");
-          // textBox.lineFormat.color = "black";
-          // textBox.lineFormat.weight = 1;
-          // textBox.lineFormat.dashStyle = PowerPoint.ShapeLineDashStyle.solid;
+// textBox.fill.setSolidColor("white");
+// textBox.lineFormat.color = "black";
+// textBox.lineFormat.weight = 1;
+// textBox.lineFormat.dashStyle = PowerPoint.ShapeLineDashStyle.solid;
 
 // -- TBH i don't think i need this class
 // Define the main class
