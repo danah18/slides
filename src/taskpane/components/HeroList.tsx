@@ -1,5 +1,5 @@
 import * as React from "react";
-import { tokens, makeStyles } from "@fluentui/react-components";
+import { tokens, makeStyles, Button } from "@fluentui/react-components";
 
 export interface HeroListItem {
   icon: React.JSX.Element;
@@ -41,16 +41,23 @@ const useStyles = makeStyles({
   },
 });
 
+const function2 = () => {
+  console.log("function 2 definition was all good");
+};
+
 const HeroList: React.FC<HeroListProps> = (props: HeroListProps) => {
   const { items, message } = props;
   const styles = useStyles();
 
   const listItems = items.map((item, index) => (
-    <li className={styles.listItem} key={index}>
-      <i className={styles.icon}>{item.icon}</i>
-      <span className={styles.itemText}>{item.primaryText}</span>
-    </li>
+      <li className={styles.listItem} key={index}>
+        <Button onClick={function2}>
+          <i className={styles.icon}>{item.icon}</i>
+          <span className={styles.itemText}>{item.primaryText}</span>
+        </Button>
+      </li>    
   ));
+
   return (
     <div className={styles.welcome__main}>
       <h2 className={styles.message}>{message}</h2>

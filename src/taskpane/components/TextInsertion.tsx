@@ -46,12 +46,12 @@ const TextInsertion: React.FC<TextInsertionProps> = (props: TextInsertionProps) 
   const showSlides = () => {
     let listItems: HeroListItem[];
 
-    if (text == "drug pricing table")
+    if (text.includes("cancer") || text.includes("Cancer") || text == "cancer drug" || text == "cancer drug pricing" || text == "cancer drug pricing presentations" || text == "cancer drug presentations")
     {
       console.log("$$$ text is ", text)
       listItems = [
         {
-          icon: <img src={"../../../assets/drugpricing1.png"} alt="" style={{ width: `${width}px`, height: `${height}px`}}/>,
+          icon: <img src={"../../../assets/drugpricing1.png"} alt="" style={{ width: `${width}px`, height: `${height}px`, paddingBottom: 5}}/>,
           primaryText: "",
         },
         {
@@ -68,7 +68,7 @@ const TextInsertion: React.FC<TextInsertionProps> = (props: TextInsertionProps) 
         },
       ];
     }
-    else if (text == "row comparison")
+    else if (text.includes("Policy") || text.includes("policy") || text == "policy comparison" || text == "green rows")
     {
       console.log("$$$ text is ", text)
       listItems = [
@@ -90,7 +90,7 @@ const TextInsertion: React.FC<TextInsertionProps> = (props: TextInsertionProps) 
         },
       ];
     }
-    else if (text == "two chart comparison")
+    else if (text == "insulin price comparison" || text == "insulin price" || text.includes("insulin") || text.includes("Insulin")) 
     {
       console.log("$$$ text is ", text)
       listItems = [
@@ -104,7 +104,24 @@ const TextInsertion: React.FC<TextInsertionProps> = (props: TextInsertionProps) 
         },
       ];
     }
-    else if (text == "column comparison")
+    else if (text == "drug pricing table" || text.includes("drug pricing") || text.includes("Drug pricing"))    {
+      console.log("$$$ text is ", text)
+      listItems = [
+        {
+          icon: <img src={"../../../assets/policy1.png"} alt="" style={{ width: `${width}px`, height: `${height}px`}}/>,
+          primaryText: "",
+        },
+        {
+          icon: <img src={"../../../assets/policy2.png"} alt="" style={{ width: `${width}px`, height: `${height}px`}}/>,
+          primaryText: "",
+        },
+        {
+          icon: <img src={"../../../assets/policy3.png"} alt="" style={{ width: `${width}px`, height: `${height}px`}}/>,
+          primaryText: "",
+        },
+      ];
+    }
+    else if (text == "column comparison" || text.includes("column") || text.includes("Column") || text.includes("columns") || text.includes("Columns"))
     {
       console.log("$$$ text is ", text)
       listItems = [
@@ -174,13 +191,13 @@ const TextInsertion: React.FC<TextInsertionProps> = (props: TextInsertionProps) 
       //const image = newSlide.shapes.addImage(imageBase64);
 
       // Usage example
-      loadFileFromPath('../../../assets/columncomparison2.png')
-      .then((content) => {
+      // loadFileFromPath('../../../assets/columncomparison2.png')
+      // .then((content) => {
 
-        Office.context.document.setSelectedDataAsync(content);
-        console.log(content)
-      })
-      .catch((error) => console.error('Error:', error));
+      //   Office.context.document.setSelectedDataAsync(content);
+      //   console.log(content)
+      // })
+      // .catch((error) => console.error('Error:', error));
 
       // Office.context.document.setSelectedDataAsync("../../../assets/columncomparison2.png");
 
@@ -190,12 +207,12 @@ const TextInsertion: React.FC<TextInsertionProps> = (props: TextInsertionProps) 
       //const base64String = await convertImageToBase64(fileInput.files[0]);
       //console.log(base64String);
       // Base64 encoded image string
-      //const base64Image = 'iVBORw0KGgoAAAANSUhEUgAAAAUA...'; // Your base64 image data
+      const base64String = ""; // Your base64 image data
 
       // Complete data URL with MIME type
-      //const imageSrc = `data:image/png;base64,${base64String}`;
+      // const imageSrc = `data:image/png;base64,${base64String}`;
 
-      // Insert the image into the selected area
+      // // Insert the image into the selected area
       // Office.context.document.setSelectedDataAsync(imageSrc, {
       //   coercionType: Office.CoercionType.Image
       // }, (asyncResult) => {
@@ -217,9 +234,12 @@ const TextInsertion: React.FC<TextInsertionProps> = (props: TextInsertionProps) 
       // const slide = context.presentation.getSelectedSlides().getItemAt(0);
       // const shapes = slide.shapes;
       // let x = text;
-
     });
   };
+
+  /* <Button appearance="primary" disabled={false} size="large" onClick={handleApply}>
+        Apply
+      </Button> */
 
   const styles = useStyles();
 
@@ -233,9 +253,6 @@ const TextInsertion: React.FC<TextInsertionProps> = (props: TextInsertionProps) 
         Search
       </Button>
       <HeroList message="" items={heroList} />
-      <Button appearance="primary" disabled={false} size="large" onClick={handleApply}>
-        Apply
-      </Button>
     </div>
   );
 };
