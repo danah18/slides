@@ -122,13 +122,23 @@ const function2 = async () => {
   // });
 };
 
+const displaySelectedSlide = () => {
+  // there should be some sort of state variable triggered that indicates which button was clicked
+
+  // add slide
+  // get presentation length
+  // get item at end of presentation
+  // add info to that slide
+
+};
+
 const HeroList: React.FC<HeroListProps> = (props: HeroListProps) => {
   const { items, message } = props;
   const styles = useStyles();
 
   const listItems = items.map((item, index) => (
       <li className={styles.listItem} key={index}>
-        <Button onClick={function2}>
+        <Button onClick={displaySelectedSlide}>
           <i className={styles.icon}>{item.icon}</i>
           <span className={styles.itemText}>{item.primaryText}</span>
         </Button>
