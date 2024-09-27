@@ -1,5 +1,6 @@
 import * as React from "react";
 import { tokens, makeStyles, Button } from "@fluentui/react-components";
+import { showSlideContent } from "../showSlideContent";
 
 export interface HeroListItem {
   icon: React.JSX.Element;
@@ -129,6 +130,9 @@ const displaySelectedSlide = () => {
   // get presentation length
   // get item at end of presentation
   // add info to that slide
+
+  console.log("button clicked");
+  showSlideContent();
 
 };
 

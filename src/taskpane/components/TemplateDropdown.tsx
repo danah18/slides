@@ -69,18 +69,18 @@ export const TemplateDropdown = (props: Partial<DropdownProps>) => {
     
     let shapeArray: ShapeArray;
 
-    fetch(`/json/${firstWord}/execsumm1.json`)
-        .then((response) => response.json())  // Load as array
-        .then((data) => {
-          // Map JSON to class instances
-          const userObjects = data.map((user: any) => new ShapeArray(user));
-          //shapeArray = data;
-          console.log("Loading as Shape was fine");
-          console.log(userObjects);
-        })
-    .catch((error) => {
-        console.error('Error loading the JSON file:', error);
-    });
+    // fetch(`/json/${firstWord}/execsumm1.json`)
+    //     .then((response) => response.json())  // Load as array
+    //     .then((data) => {
+    //       // Map JSON to class instances
+    //       const userObjects = data.map((user: any) => new ShapeArray(user));
+    //       //shapeArray = data;
+    //       console.log("Loading as Shape was fine");
+    //       console.log(userObjects);
+    //     })
+    // .catch((error) => {
+    //     console.error('Error loading the JSON file:', error);
+    // });
 
 
     //insertText();
