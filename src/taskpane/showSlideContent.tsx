@@ -83,18 +83,6 @@ export async function showSlideContent() {
                 textBox.top = shapeArray[i].top;
                 textBox.name = shapeArray[i].name;
 
-                if (isNotEmpty(shapeArray[i].fill))
-                {
-                    shapeArray[i].fill.load("foregroundColor");
-                }
-                
-                if (isNotEmpty(shapeArray[i].lineFormat))
-                {
-                    shapeArray[i].lineFormat.load("color");
-                    shapeArray[i].lineFormat.load("weight");
-                    shapeArray[i].lineFormat.load("dashStyle");
-                }
-
                 await context.sync();
 
                 // TODO there may be an asynchronous error
@@ -123,8 +111,6 @@ export async function showSlideContent() {
                     // console.log(shapeArray[i].lineFormat.dashStyle);
                     //textBox.lineFormat.dashStyle = shapeArray[i].lineFormat.dashStyle;
                 }
-
-                let value = textBox.textFrame.textRange.paragraphFormat;
 
                 textBox.textFrame.textRange.font.name = shapeArray[i].textFrame.textRange.font.name;
                 textBox.textFrame.textRange.font.size = shapeArray[i].textFrame.textRange.font.size;
@@ -170,15 +156,14 @@ export async function showSlideContent() {
                 line.top = shapeArray[i].top;
                 line.name = shapeArray[i].name;
 
-                shapeArray[i].lineFormat.load("color");
-                shapeArray[i].lineFormat.load("weight");
-                shapeArray[i].lineFormat.load("dashStyle");
-
                 await context.sync();
 
-                line.lineFormat.color = shapeArray[i].lineFormat.color;
-                line.lineFormat.weight = shapeArray[i].lineFormat.weight;
-                line.lineFormat.dashStyle = shapeArray[i].lineFormat.dashStyle;
+                if (isNotEmpty(line.lineFormat))
+                {
+                    line.lineFormat.color = shapeArray[i].lineFormat.color;
+                    line.lineFormat.weight = shapeArray[i].lineFormat.weight;
+                    line.lineFormat.dashStyle = shapeArray[i].lineFormat.dashStyle;
+                }
             }
             else if (shapeArray[i].type == "Table")
             {

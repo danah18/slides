@@ -93,6 +93,24 @@ export async function outputToJson() {
 
           await context.sync();
 
+          // add in shapeFill accordingly
+          // fill in lineFormat accordingly
+
+          console.log(
+            {
+                color: shape.lineFormat.color,
+                weight: shape.lineFormat.weight,
+                dashStyle: shape.lineFormat.dashStyle,
+                context: null,
+                style: null,
+                transparency: null,
+                visible: null,
+                load: null,
+                toJSON: null,
+                isNullObject: null,
+              }
+          );
+
           shapeInterface = {
               height: shape.height,
               width: shape.width,
@@ -102,22 +120,91 @@ export async function outputToJson() {
               name: shape.name,
               textFrame: textFrame,
               type: type,
-              fill: shape.fill,
-              lineFormat: shape.lineFormat,
+              fill: {
+                foregroundColor: shape.fill.foregroundColor,
+                transparency: null,
+                type: null,
+                load: null,
+                toJSON: null,
+                isNullObject: null,
+                setSolidColor: null,
+                context: null,
+                clear: null,
+              },
+              lineFormat: {
+                color: shape.lineFormat.color,
+                weight: shape.lineFormat.weight,
+                dashStyle: shape.lineFormat.dashStyle,
+                context: null,
+                style: null,
+                transparency: null,
+                visible: null,
+                load: null,
+                toJSON: null,
+                isNullObject: null,
+              }
             };
 
-            if (shape.textFrame.textRange.text.includes("Fit"))
-            {
-              let vert = shape;
-            }
-
-            if (shape.textFrame.textRange.text.includes("Eco"))
-            {
-              let filll = shape.fill;
-              let formatt = shape.lineFormat;
-            }
-
+        //    fill: shape.fill.foregroundColor,  // Use foregroundColor after sync
+ 
             shapeArray.push(shapeInterface); 
+          }
+
+          else if (type == "Line")
+          {
+            console.log("Line found");
+
+            shape.fill.load("foregroundColor");
+            shape.lineFormat.load("color");
+            shape.lineFormat.load("weight");
+            shape.lineFormat.load("dashStyle");
+
+            await context.sync();
+
+            shapeInterface = {
+              height: shape.height,
+              width: shape.width,
+              left: shape.left,
+              top: shape.top,
+              id: shape.id,
+              name: shape.name,
+              textFrame: null,
+              type: type,
+              fill: shape.fill,
+              lineFormat: {
+                color: shape.lineFormat.color,
+                weight: shape.lineFormat.weight,
+                dashStyle: shape.lineFormat.dashStyle,
+                context: null,
+                style: null,
+                transparency: null,
+                visible: null,
+                load: null,
+                toJSON: null,
+                isNullObject: null,
+              }
+            };
+            shapeArray.push(shapeInterface);
+          }
+          else if (type == "Table")
+          {
+            console.log("Table found");
+          }
+          else if (type == "Image")
+          {
+            console.log("Image found");
+          }
+          else if (type == "Group")
+          {
+            console.log("Group found");
+          }
+          else if (type == "Unsupported")
+          {
+            console.log("Unsupported found");
+          }
+          else
+          {
+            console.log("Other found");
           }
         }
 
