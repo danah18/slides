@@ -8,6 +8,8 @@ const height = 100;
 
 interface TextInsertionProps {
   insertText: (text: string) => void;
+  heroList: HeroListItem[];
+  setHeroList: React.Dispatch<React.SetStateAction<HeroListItem[]>>; 
 }
 
 const useStyles = makeStyles({
@@ -32,7 +34,7 @@ const useStyles = makeStyles({
 
 const TextInsertion: React.FC<TextInsertionProps> = (props: TextInsertionProps) => {
   const [text, setText] = useState<string>("");
-  const [heroList, setHeroList] = useState<HeroListItem[]>([]);
+  //const [heroList, setHeroList] = useState<HeroListItem[]>([]);
 
   const handleTextInsertion = async () => {
     showSlides();
@@ -140,8 +142,8 @@ const TextInsertion: React.FC<TextInsertionProps> = (props: TextInsertionProps) 
       listItems = [];
     }
     
-    setHeroList(listItems);
-    console.log("$$$ hero list is ", heroList)
+    props.setHeroList(listItems);
+    console.log("$$$ hero list is ", props.heroList)
   }
   
   // function convertImageToBase64(file: File): Promise<string> {
@@ -252,7 +254,6 @@ const TextInsertion: React.FC<TextInsertionProps> = (props: TextInsertionProps) 
       <Button appearance="primary" disabled={false} size="large" onClick={handleTextInsertion}>
         Search
       </Button>
-      <HeroList message="" items={heroList} />
     </div>
   );
 };

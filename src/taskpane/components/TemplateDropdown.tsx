@@ -11,6 +11,7 @@ import {
 import { insertText } from "../taskpane";
 import { outputToJson } from "../outputToJson";
 import { Shape, ShapeArray } from "../Shape";
+import { HeroListItem } from "./HeroList";
   
 const useStyles = makeStyles({
   root: {
@@ -26,7 +27,16 @@ const useStyles = makeStyles({
   },
 });
 
-export const TemplateDropdown = (props: Partial<DropdownProps>) => {
+// Define custom props you want to add
+interface TemplateDropdownProps {
+  heroList: HeroListItem[];
+  setHeroList: React.Dispatch<React.SetStateAction<HeroListItem[]>>; 
+}
+
+// Merge DropdownProps with the custom props using an intersection
+type CombinedProps = Partial<DropdownProps> & TemplateDropdownProps;
+
+export const TemplateDropdown = (props: CombinedProps) => {
   const dropdownId = useId("dropdown-default");
   const options = [
     TemplateCategory.Executive,
@@ -43,6 +53,8 @@ export const TemplateDropdown = (props: Partial<DropdownProps>) => {
     TemplateCategory.Pie,
   ];
 
+  const { heroList, setHeroList, ...dropdownProps } = props;
+
   const styles = useStyles();
   
   // Function that handles the option selection
@@ -54,37 +66,23 @@ export const TemplateDropdown = (props: Partial<DropdownProps>) => {
     const firstWord = titleNameArray[0].toLowerCase();
 
     // show corresponding hero list when option is selected
-
     // when button is clicked, show the slide info from the json
 
-    // fetch(`/json/${firstWord}/execsumm1.json`)
-    //     .then((response) => response.text())  // Load as string
-    //     .then((data) => {
-    //         console.log("Loading as string was fine");
-    //         console.log(data);
-    //     })
-    //    .catch((error) => {
-    //      console.error('Error loading the JSON file:', error);
-    //    });
-    
-    let shapeArray: ShapeArray;
-
-    // fetch(`/json/${firstWord}/execsumm1.json`)
-    //     .then((response) => response.json())  // Load as array
-    //     .then((data) => {
-    //       // Map JSON to class instances
-    //       const userObjects = data.map((user: any) => new ShapeArray(user));
-    //       //shapeArray = data;
-    //       console.log("Loading as Shape was fine");
-    //       console.log(userObjects);
-    //     })
-    // .catch((error) => {
-    //     console.error('Error loading the JSON file:', error);
-    // });
-
-
     //insertText();
-    outputToJson();
+    
+    //outputToJson();
+
+    const width = 150;
+    const height = 100;
+
+    const listItems = [
+      {
+        icon: <img src={"../../../assets/execsumm1.png"} alt="" style={{ width: `${width}px`, height: `${height}px`, paddingBottom: 5}}/>,
+        primaryText: "",
+      },
+    ];
+
+    setHeroList(listItems);
   };
 
   return (
@@ -93,7 +91,7 @@ export const TemplateDropdown = (props: Partial<DropdownProps>) => {
         aria-labelledby={dropdownId}
         placeholder="Templates"
         onOptionSelect={handleOptionSelect}
-        {...props}
+        {...dropdownProps}
       >
         {options.map((option) => (
           <Option key={option}>

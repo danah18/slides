@@ -42,10 +42,14 @@ const App: React.FC<AppProps> = () => {
     },
   ];
 
+  const [heroList, setHeroList] = React.useState<HeroListItem[]>([]);
+
+  // TODO: have 1 shared hero list between template dropdown and text insertion
   return (
     <div className={styles.root}>
-      <TemplateDropdown/>
-      <TextInsertion insertText={search} />
+      <TemplateDropdown heroList={heroList} setHeroList={setHeroList}/>
+      <TextInsertion insertText={search} heroList={heroList} setHeroList={setHeroList}/>
+      <HeroList message="" items={heroList} />
     </div>
   );
 };
