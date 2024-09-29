@@ -65,28 +65,45 @@ export const TemplateDropdown = (props: CombinedProps) => {
     const titleNameArray = data.optionValue.split(" ");
     const firstWord = titleNameArray[0].toLowerCase();
 
-    // show corresponding hero list when option is selected
-    // when button is clicked, show the slide info from the json
-
-    //insertText();
-    
+    //insertText();    
     outputToJson();
 
     const width = 150;
     const height = 100;
 
-    const listItems = [
-      {
-        icon: <img src={"../../../assets/execsumm0.png"} alt="" style={{ width: `${width}px`, height: `${height}px`, paddingBottom: 5}}/>,
-        primaryText: "",
-      },
-      {
-        icon: <img src={"../../../assets/execsumm1.png"} alt="" style={{ width: `${width}px`, height: `${height}px`, paddingBottom: 5}}/>,
-        primaryText: "",
-      },
-    ];
+    let listItems;
 
-    setHeroList(listItems);
+    console.log(firstWord);
+
+    // TODO swap to the first word being the search title
+    if (firstWord == "executive")
+    {
+      listItems = [
+        {
+          icon: <img src={"../../../assets/executive0.png"} alt="" style={{ width: `${width}px`, height: `${height}px`, paddingBottom: 5}}/>,
+          primaryText: "",
+        },
+        {
+          icon: <img src={"../../../assets/executive1.png"} alt="" style={{ width: `${width}px`, height: `${height}px`, paddingBottom: 5}}/>,
+          primaryText: "",
+        },
+        {
+          icon: <img src={"../../../assets/executive2.png"} alt="" style={{ width: `${width}px`, height: `${height}px`, paddingBottom: 5}}/>,
+          primaryText: "",
+        },
+        {
+          icon: <img src={"../../../assets/executive3.png"} alt="" style={{ width: `${width}px`, height: `${height}px`, paddingBottom: 5}}/>,
+          primaryText: "",
+        },
+      ];
+
+      setHeroList(listItems);
+    }
+    else
+    {
+      const emptyList: HeroListItem[] = [];
+      setHeroList(emptyList);
+    }
   };
 
   return (
