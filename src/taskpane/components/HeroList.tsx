@@ -123,7 +123,7 @@ const function2 = async () => {
   // });
 };
 
-const displaySelectedSlide = () => {
+const displaySelectedSlide = (index: number) => {
   // there should be some sort of state variable triggered that indicates which button was clicked
 
   // add slide
@@ -131,8 +131,8 @@ const displaySelectedSlide = () => {
   // get item at end of presentation
   // add info to that slide
 
-  console.log("button clicked");
-  showSlideContent();
+  console.log("button clicked " + index);
+  showSlideContent(index);
 
 };
 
@@ -142,7 +142,7 @@ const HeroList: React.FC<HeroListProps> = (props: HeroListProps) => {
 
   const listItems = items.map((item, index) => (
       <li className={styles.listItem} key={index}>
-        <Button onClick={displaySelectedSlide}>
+        <Button onClick={() => displaySelectedSlide(index)}>
           <i className={styles.icon}>{item.icon}</i>
           <span className={styles.itemText}>{item.primaryText}</span>
         </Button>

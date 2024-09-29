@@ -1,12 +1,12 @@
 /* global PowerPoint console */
 import { Font, TextRange, TextFrame, Shape, ShapeArray } from './Shape';
 
-const loadJson = async () => {
+const loadJson = async (index: number) => {
     try {
         let firstWord = "executive";
 
         // Await the fetch call and JSON response
-        const response = await fetch(`/json/${firstWord}/execsumm0.json`);
+        const response = await fetch(`/json/${firstWord}/execsumm${index}.json`);
         const data = await response.json();
     
         // Create the ShapeArray object after data is available
@@ -30,7 +30,7 @@ const isNotEmpty = (obj : Object) => {
     return (obj && Object.keys(obj).length > 0 )
 }
 
-export async function showSlideContent() {
+export async function showSlideContent(index: number) {
     await PowerPoint.run(async (context) => {
         // Add a new slide to the presentation
         context.presentation.slides.add();
@@ -64,7 +64,7 @@ export async function showSlideContent() {
         {
         }
 
-        let shapeArray = await loadJson();
+        let shapeArray = await loadJson(index);
 
         for (let i = 0; i < shapeArray.length; i++) {
         // A more effective way to fill in this data is definitely needed

@@ -70,7 +70,7 @@ export const TemplateDropdown = (props: CombinedProps) => {
 
     //insertText();
     
-    //outputToJson();
+    outputToJson();
 
     const width = 150;
     const height = 100;
@@ -78,6 +78,10 @@ export const TemplateDropdown = (props: CombinedProps) => {
     const listItems = [
       {
         icon: <img src={"../../../assets/execsumm0.png"} alt="" style={{ width: `${width}px`, height: `${height}px`, paddingBottom: 5}}/>,
+        primaryText: "",
+      },
+      {
+        icon: <img src={"../../../assets/execsumm1.png"} alt="" style={{ width: `${width}px`, height: `${height}px`, paddingBottom: 5}}/>,
         primaryText: "",
       },
     ];
