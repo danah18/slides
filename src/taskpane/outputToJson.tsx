@@ -65,6 +65,9 @@ export async function outputToJson() {
             shape.textFrame.textRange.load("paragraphFormat");
             await context.sync();
 
+            shape.textFrame.textRange.paragraphFormat.bulletFormat.load("visible");
+            await context.sync();
+
             // seems like we can use the Powerpoint classes themselves, since it's just an array we are storing them in
             const font: Font = {
               name: fontObj.name,
@@ -78,14 +81,27 @@ export async function outputToJson() {
             const textRange: TextRange = {
               text: shape.textFrame.textRange.text, 
               font: font,
-              paragraphFormat: shape.textFrame.textRange.paragraphFormat,
+              paragraphFormat: {
+                bulletFormat: {
+                    visible: shape.textFrame.textRange.paragraphFormat.bulletFormat.visible,
+                    load: null,
+                    toJSON: null,
+                    isNullObject: null,
+                    context: null,
+                },
+                horizontalAlignment: shape.textFrame.textRange.paragraphFormat.horizontalAlignment,
+                load: null,
+                toJSON: null,
+                isNullObject: null,
+                context: null,
+              },
             };
       
             const textFrame: TextFrame = {
               textRange: textRange,
               verticalAlignment: shape.textFrame.verticalAlignment,
             };
-            
+
           shape.fill.load("foregroundColor");
           shape.lineFormat.load("color");
           shape.lineFormat.load("weight");

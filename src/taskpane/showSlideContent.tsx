@@ -122,11 +122,6 @@ export async function showSlideContent() {
 
                 //textBox.textFrame.autoSizeSetting = "AutoSizeTextToFitShape";
 
-                if (isNotEmpty(shapeArray[i].textFrame.textRange.paragraphFormat))
-                {
-                    shapeArray[i].textFrame.textRange.paragraphFormat.bulletFormat.load("visible");
-                }
-
                 // TODO can probably move the context syncs into the if check
                 await context.sync();
 
