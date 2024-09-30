@@ -10,6 +10,7 @@ export interface HeroListItem {
 export interface HeroListProps {
   message: string;
   items: HeroListItem[];
+  category: string;
 }
 
 export interface SlideRange {
@@ -123,26 +124,23 @@ const function2 = async () => {
   // });
 };
 
-const displaySelectedSlide = (index: number) => {
-  // there should be some sort of state variable triggered that indicates which button was clicked
-
+const displaySelectedSlide = (category: string, index: number) => {
   // add slide
   // get presentation length
   // get item at end of presentation
   // add info to that slide
 
-  console.log("button clicked " + index);
-  showSlideContent(index);
+  showSlideContent(category, index);
 
 };
 
 const HeroList: React.FC<HeroListProps> = (props: HeroListProps) => {
-  const { items, message } = props;
+  const { items, message, category } = props;
   const styles = useStyles();
-
+  
   const listItems = items.map((item, index) => (
       <li className={styles.listItem} key={index}>
-        <Button onClick={() => displaySelectedSlide(index)}>
+        <Button onClick={() => displaySelectedSlide(category, index)}>
           <i className={styles.icon}>{item.icon}</i>
           <span className={styles.itemText}>{item.primaryText}</span>
         </Button>

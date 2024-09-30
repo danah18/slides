@@ -31,6 +31,7 @@ const useStyles = makeStyles({
 interface TemplateDropdownProps {
   heroList: HeroListItem[];
   setHeroList: React.Dispatch<React.SetStateAction<HeroListItem[]>>; 
+  setCategory: React.Dispatch<React.SetStateAction<string>>; 
 }
 
 // Merge DropdownProps with the custom props using an intersection
@@ -42,41 +43,37 @@ export const TemplateDropdown = (props: CombinedProps) => {
     TemplateCategory.Executive,
     TemplateCategory.Assessment,
     TemplateCategory.Competitor,
+    TemplateCategory.Process,
     TemplateCategory.Trends,
-    TemplateCategory.Roadmap,
-    TemplateCategory.DetailedImplementation,
-    TemplateCategory.Findings,
-    TemplateCategory.Frameworks,
+    // TemplateCategory.DetailedImplementation,
+    // TemplateCategory.Frameworks,
     TemplateCategory.Column,
     TemplateCategory.Line,
     TemplateCategory.Bubble,
-    TemplateCategory.Pie,
   ];
 
-  const { heroList, setHeroList, ...dropdownProps } = props;
-
+  const { heroList, setHeroList, setCategory, ...dropdownProps } = props;
   const styles = useStyles();
   
   // Function that handles the option selection
   const handleOptionSelect = (_event: React.SyntheticEvent, data: OptionOnSelectData) => {
-    console.log("Selected option:", data.optionValue); // The selected value
-    console.log(TemplateDictionary[data.optionValue]);
-
+    // The selected value is data.optionValue
     const titleNameArray = data.optionValue.split(" ");
-    const firstWord = titleNameArray[0].toLowerCase();
+    const category = titleNameArray[0].toLowerCase();
+    setCategory(category);
 
     //insertText();    
     outputToJson();
 
-    const width = 150;
-    const height = 100;
+    let width = 150;
+    let height = 100;
 
-    let listItems;
+    let listItems: HeroListItem[] = [];
 
-    console.log(firstWord);
+    console.log(category);
 
     // TODO swap to the first word being the search title
-    if (firstWord == "executive")
+    if (category == "executive")
     {
       listItems = [
         {
@@ -96,6 +93,143 @@ export const TemplateDropdown = (props: CombinedProps) => {
           primaryText: "",
         },
       ];
+
+      setHeroList(listItems);
+    }
+    else if (category == "assessment")
+    {
+      listItems = [
+        {
+          icon: <img src={"../../../assets/assessment3.png"} alt="" style={{ width: `${width}px`, height: `${height}px`, paddingBottom: 5}}/>,
+          primaryText: "",
+        },
+        {
+          icon: <img src={"../../../assets/assessment1.png"} alt="" style={{ width: `${width}px`, height: `${height}px`, paddingBottom: 5}}/>,
+          primaryText: "",
+        },
+        {
+          icon: <img src={"../../../assets/assessment2.png"} alt="" style={{ width: `${width}px`, height: `${height}px`, paddingBottom: 5}}/>,
+          primaryText: "",
+        },
+        {
+          icon: <img src={"../../../assets/assessment0.png"} alt="" style={{ width: `${width}px`, height: `${height}px`, paddingBottom: 5}}/>,
+          primaryText: "",
+        },
+      ];
+
+      setHeroList(listItems);
+    }
+    else if (category == "competitor")
+    {
+      listItems = [
+        {
+          icon: <img src={"../../../assets/competitor0.png"} alt="" style={{ width: `${width}px`, height: `${height}px`, paddingBottom: 5}}/>,
+          primaryText: "",
+        },
+        {
+          icon: <img src={"../../../assets/competitor1.png"} alt="" style={{ width: `${width}px`, height: `${height}px`, paddingBottom: 5}}/>,
+          primaryText: "",
+        },
+        {
+          icon: <img src={"../../../assets/competitor2.png"} alt="" style={{ width: `${width}px`, height: `${height}px`, paddingBottom: 5}}/>,
+          primaryText: "",
+        },
+        {
+          icon: <img src={"../../../assets/competitor3.png"} alt="" style={{ width: `${width}px`, height: `${height}px`, paddingBottom: 5}}/>,
+          primaryText: "",
+        },
+        {
+          icon: <img src={"../../../assets/competitor4.png"} alt="" style={{ width: `${width}px`, height: `${height}px`, paddingBottom: 5}}/>,
+          primaryText: "",
+        },
+        {
+          icon: <img src={"../../../assets/competitor5.png"} alt="" style={{ width: `${width}px`, height: `${height}px`, paddingBottom: 5}}/>,
+          primaryText: "",
+        },
+      ];
+
+      setHeroList(listItems);
+    }
+    else if (category == "process")
+    {
+      listItems = [
+        {
+          icon: <img src={"../../../assets/process5.png"} alt="" style={{ width: `${width}px`, height: `${height}px`, paddingBottom: 5}}/>,
+          primaryText: "",
+        },
+        {
+          icon: <img src={"../../../assets/process1.png"} alt="" style={{ width: `${width}px`, height: `${height}px`, paddingBottom: 5}}/>,
+          primaryText: "",
+        },
+        {
+          icon: <img src={"../../../assets/process2.png"} alt="" style={{ width: `${width}px`, height: `${height}px`, paddingBottom: 5}}/>,
+          primaryText: "",
+        },
+        {
+          icon: <img src={"../../../assets/process0.png"} alt="" style={{ width: `${width}px`, height: `${height}px`, paddingBottom: 5}}/>,
+          primaryText: "",
+        },
+        {
+          icon: <img src={"../../../assets/process4.png"} alt="" style={{ width: `${width}px`, height: `${height}px`, paddingBottom: 5}}/>,
+          primaryText: "",
+        },
+        {
+          icon: <img src={"../../../assets/process3.png"} alt="" style={{ width: `${width}px`, height: `${height}px`, paddingBottom: 5}}/>,
+          primaryText: "",
+        },
+      ];
+
+      setHeroList(listItems);
+    }
+    else if (category == "main")
+    {
+      listItems = [
+        {
+          icon: <img src={"../../../assets/main0.png"} alt="" style={{ width: `${width}px`, height: `${height}px`, paddingBottom: 5}}/>,
+          primaryText: "",
+        },
+        {
+          icon: <img src={"../../../assets/main1.png"} alt="" style={{ width: `${width}px`, height: `${height}px`, paddingBottom: 5}}/>,
+          primaryText: "",
+        },
+        {
+          icon: <img src={"../../../assets/main2.png"} alt="" style={{ width: `${width}px`, height: `${height}px`, paddingBottom: 5}}/>,
+          primaryText: "",
+        },
+        {
+          icon: <img src={"../../../assets/main3.png"} alt="" style={{ width: `${width}px`, height: `${height}px`, paddingBottom: 5}}/>,
+          primaryText: "",
+        },
+        {
+          icon: <img src={"../../../assets/main4.png"} alt="" style={{ width: `${width}px`, height: `${height}px`, paddingBottom: 5}}/>,
+          primaryText: "",
+        },
+        {
+          icon: <img src={"../../../assets/main5.png"} alt="" style={{ width: `${width}px`, height: `${height}px`, paddingBottom: 5}}/>,
+          primaryText: "",
+        },
+        {
+          icon: <img src={"../../../assets/main6.png"} alt="" style={{ width: `${width}px`, height: `${height}px`, paddingBottom: 5}}/>,
+          primaryText: "",
+        },
+      ];
+
+      setHeroList(listItems);
+    }
+    else if (category == "column" || category == "line" || category == "bubble")
+    {
+      if (category == "bubble")
+      {
+        width = 160;
+        height = 100;
+      }
+
+      for (let i = 0; i < 5; i++) {
+        listItems.push({
+          icon: <img src={`../../../assets/${category}${i}.png`} alt="" style={{ width: `${width}px`, height: `${height}px`, paddingBottom: 5}}/>,
+          primaryText: "",
+        },);
+      }
 
       setHeroList(listItems);
     }

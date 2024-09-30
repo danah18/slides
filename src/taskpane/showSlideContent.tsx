@@ -1,12 +1,10 @@
 /* global PowerPoint console */
 import { Font, TextRange, TextFrame, Shape, ShapeArray } from './Shape';
 
-const loadJson = async (index: number) => {
+const loadJson = async (category: string, index: number) => {
     try {
-        let firstWord = "executive";
-
         // Await the fetch call and JSON response
-        const response = await fetch(`/json/${firstWord}/execsumm${index}.json`);
+        const response = await fetch(`/json/${category}/${index}.json`);
         const data = await response.json();
     
         // Create the ShapeArray object after data is available
@@ -30,7 +28,7 @@ const isNotEmpty = (obj : Object) => {
     return (obj && Object.keys(obj).length > 0 )
 }
 
-export async function showSlideContent(index: number) {
+export async function showSlideContent(category: string, index: number) {
     await PowerPoint.run(async (context) => {
         // Add a new slide to the presentation
         context.presentation.slides.add();
@@ -64,9 +62,12 @@ export async function showSlideContent(index: number) {
         {
         }
 
-        let shapeArray = await loadJson(index);
+        let shapeArray = await loadJson(category, index);
 
         for (let i = 0; i < shapeArray.length; i++) {
+            console.log(i);
+            console.log(shapeArray[i].type);
+
         // A more effective way to fill in this data is definitely needed
             if (shapeArray[i].type == "GeometricShape")
             {
@@ -112,6 +113,8 @@ export async function showSlideContent(index: number) {
                     //textBox.lineFormat.dashStyle = shapeArray[i].lineFormat.dashStyle;
                 }
 
+                console.log("we made it here ok 1...");
+
                 textBox.textFrame.textRange.font.name = shapeArray[i].textFrame.textRange.font.name;
                 textBox.textFrame.textRange.font.size = shapeArray[i].textFrame.textRange.font.size;
                 textBox.textFrame.textRange.font.color = shapeArray[i].textFrame.textRange.font.color;
@@ -120,10 +123,16 @@ export async function showSlideContent(index: number) {
                 textBox.textFrame.textRange.font.italic = shapeArray[i].textFrame.textRange.font.italic;
                 textBox.textFrame.verticalAlignment = shapeArray[i].textFrame.verticalAlignment as PowerPoint.TextVerticalAlignment;            
 
+
+                console.log("we made it here ok 2...");
+
                 //textBox.textFrame.autoSizeSetting = "AutoSizeTextToFitShape";
 
                 // TODO can probably move the context syncs into the if check
-                await context.sync();
+              //  await context.sync();
+
+
+                console.log("we made it here ok 2.5...");
 
                 if (isNotEmpty(shapeArray[i].textFrame.textRange.paragraphFormat))
                 {
@@ -131,6 +140,8 @@ export async function showSlideContent(index: number) {
                     textBox.textFrame.textRange.paragraphFormat.bulletFormat.visible = shapeArray[i].textFrame.textRange.paragraphFormat.bulletFormat.visible;
                 }
                 
+                console.log("we made it here ok 3 ...");
+
                 newSlide.shapes.items.push();
                 console.log("new shape items pushed #####");
 
@@ -144,6 +155,9 @@ export async function showSlideContent(index: number) {
 
                 await context.sync();
 
+
+                console.log("Line found 1");
+
                 // PowerPoint.GeometricShapeType
                 line.width = shapeArray[i].width;
                 line.height = shapeArray[i].height;
@@ -151,7 +165,12 @@ export async function showSlideContent(index: number) {
                 line.top = shapeArray[i].top;
                 line.name = shapeArray[i].name;
 
+
+                console.log("Line found 1.5");
                 await context.sync();
+
+
+                console.log("Line found 2");
 
                 if (isNotEmpty(line.lineFormat))
                 {
@@ -159,6 +178,9 @@ export async function showSlideContent(index: number) {
                     line.lineFormat.weight = shapeArray[i].lineFormat.weight;
                     line.lineFormat.dashStyle = shapeArray[i].lineFormat.dashStyle;
                 }
+
+
+                console.log("Line found 3");
             }
             else if (shapeArray[i].type == "Table")
             {

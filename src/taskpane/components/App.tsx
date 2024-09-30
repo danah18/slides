@@ -23,33 +23,17 @@ const width = 150;
 const height = 100;
 
 const App: React.FC<AppProps> = () => {
-
   const styles = useStyles();
-  // The list items are static and won't change at runtime,
-  // so this should be an ordinary const, not a part of state.
-  const listItems: HeroListItem[] = [
-    {
-      icon: <img src={"../../../assets/1.png"} alt="" style={{ width: `${width}px`, height: `${height}px`}}/>,
-      primaryText: "",
-    },
-    {
-      icon: <LockOpen24Regular />, //<img src={"../../../assets/logo-filled.png"} alt="" />,
-      primaryText: "",
-    },
-    {
-      icon: <DesignIdeas24Regular />,
-      primaryText: "",
-    },
-  ];
-
+  
   const [heroList, setHeroList] = React.useState<HeroListItem[]>([]);
+  const [category, setCategory] = React.useState<string>();
 
-  // TODO: have 1 shared hero list between template dropdown and text insertion
+  // TODO: remove HeroList.props.message as it's unused
   return (
     <div className={styles.root}>
-      <TemplateDropdown heroList={heroList} setHeroList={setHeroList}/>
+      <TemplateDropdown heroList={heroList} setHeroList={setHeroList} setCategory={setCategory}/>
       <TextInsertion insertText={search} heroList={heroList} setHeroList={setHeroList}/>
-      <HeroList message="" items={heroList} />
+      <HeroList category={category} message="" items={heroList} />
     </div>
   );
 };
